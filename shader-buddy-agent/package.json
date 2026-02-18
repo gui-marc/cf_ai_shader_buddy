@@ -1,0 +1,26 @@
+{
+	"name": "shader-buddy-agent",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"test": "vitest",
+		"cf-typegen": "wrangler types"
+	},
+	"devDependencies": {
+		"@cloudflare/vitest-pool-workers": "^0.12.4",
+		"@types/node": "^25.2.3",
+		"typescript": "^5.5.2",
+		"vitest": "~3.2.0",
+		"wrangler": "^4.66.0"
+	},
+	"dependencies": {
+		"@cloudflare/ai-chat": "^0.1.2",
+		"agents": "^0.5.0",
+		"ai": "^6.0.90",
+		"workers-ai-provider": "^3.1.1",
+		"zod": "^4.3.6"
+	}
+}
