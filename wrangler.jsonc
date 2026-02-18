@@ -1,8 +1,16 @@
 {
+  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "cf_ai_shader_buddy",
   "main": "src/agents/shader-buddy.ts",
   "compatibility_date": "2025-01-01",
   "compatibility_flags": ["nodejs_compat"],
+  "ai": {
+    "binding": "AI",
+    "remote": true,
+  },
+  "assets": {
+    "directory": "public",
+  },
   "durable_objects": {
     "bindings": [
       {
@@ -17,4 +25,7 @@
       "new_sqlite_classes": ["ShaderBuddy"],
     },
   ],
+  "observability": {
+    "enabled": true,
+  },
 }

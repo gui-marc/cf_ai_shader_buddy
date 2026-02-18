@@ -7,7 +7,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import Chat from "./components/chat";
 
 export function App() {
-  const { vertexShader, fragmentShader } = useShaderBuddy();
+  const { vertexShader, fragmentShader, agent } = useShaderBuddy();
 
   return (
     <main className="grid grid-cols-2 gap-4 p-4 min-h-svh">
@@ -45,7 +45,7 @@ export function App() {
           </Tabs>
         </div>
       </div>
-      <Chat />
+      <Chat onSubmit={(input) => agent.call("onMessageReceived", [input])} />
     </main>
   );
 }
