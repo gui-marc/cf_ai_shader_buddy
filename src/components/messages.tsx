@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import type { UIMessage } from "ai";
 import { cva } from "class-variance-authority";
+import { useEffect, useRef } from "react";
 
 const messageClasses = cva("rounded-md py-1.5 px-3 relative w-fit", {
   variants: {
@@ -12,8 +13,20 @@ const messageClasses = cva("rounded-md py-1.5 px-3 relative w-fit", {
 });
 
 export default function Messages({ messages }: { messages: UIMessage[] }) {
+  const container = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (container.current) {
+      // Scroll to the bottom when new messages are added
+      container.current.scrollTop = container.current.scrollHeight;
+    }
+  }, [messages]);
+
   return (
-    <div className="flex-1 overflow-y-auto flex flex-col gap-3">
+    <div
+      ref={container}
+      className="flex-1 overflow-y-auto flex flex-col gap-3 p-4"
+    >
       {messages.map((message) => (
         <div
           className={cn(

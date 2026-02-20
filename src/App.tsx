@@ -8,22 +8,22 @@ import Chat from "./components/chat";
 import { INITIAL_FRAGMENT_SHADER, INITIAL_VERTEX_SHADER } from "./lib/consts";
 
 export function App() {
-  const { sendMessage, messages } = useShaderBuddy();
+  const { sendMessage, messages, clearHistory } = useShaderBuddy();
 
   const vertexShader = INITIAL_VERTEX_SHADER;
   const fragmentShader = INITIAL_FRAGMENT_SHADER;
 
   return (
-    <main className="grid grid-cols-2 gap-4 p-4 min-h-svh">
-      <div className="grid grid-rows-2 gap-4">
-        <div className="overflow-hidden rounded-md border">
+    <main className="flex gap-4 p-4 h-svh">
+      <div className="flex flex-1 flex-col gap-4">
+        <div className="overflow-hidden rounded-md border flex-1">
           <ShaderTool
             fragmentShader={fragmentShader}
             vertexShader={vertexShader}
           />
         </div>
 
-        <div className="rounded-md border ">
+        <div className="rounded-md border flex-1">
           <Tabs defaultValue="vertex-code">
             <div className="p-2 border-b">
               <TabsList>
@@ -56,6 +56,7 @@ export function App() {
             text: input,
           })
         }
+        onClearHistory={clearHistory}
       />
     </main>
   );

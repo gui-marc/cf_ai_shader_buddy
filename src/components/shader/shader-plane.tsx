@@ -24,9 +24,9 @@ export default function ShaderPlane({
     [size],
   );
 
-  useFrame((_, delta) => {
+  useFrame((state) => {
     if (materialRef.current) {
-      materialRef.current.uniforms.uTime.value += delta;
+      materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
     }
   });
 

@@ -10,18 +10,39 @@ export class ShaderBuddyAgent extends AIChatAgent {
 
 		// Generate GLSL shader
 		const result = streamText({
-			model: workersai('@cf/meta/llama-3.2-1b-instruct'),
+			model: workersai('@cf/meta/llama-3-8b-instruct'),
 			system: `
-You are an expert GLSL shader developer.
-Return ONLY valid GLSL code.
-No markdown.
-No explanations.
-WebGL2 compatible.
-Include:
-- precision mediump float;
-- uniform float u_time;
-- uniform vec2 u_resolution;
-- uniform vec2 u_mouse;
+You are a GLSL expert. Output ONLY code for WebGL2.
+Use exactly this structure with tags:
+
+<vertex>
+#version 300 es
+in vec3 position;
+void main() {
+    gl_Position = vec4(position, 1.0);
+}
+</vertex>
+
+<fragment>
+#version 300 es
+precision highp float;
+uniform float uTime;
+uniform vec2 uResolution;
+out vec4 fragColor;
+
+void main() {
+    vec2 uv = gl_FragCoord.xy / uResolution;
+    // Your logic here
+    fragColor = vec4(uv.x, uv.y, 0.5, 1.0);
+}
+</fragment>
+
+Strict rules:
+1. Use #version 300 es.
+2. For fragment shaders, NEVER use gl_FragColor. Use: out vec4 fragColor;
+3. Use exactly these uniform names: uTime, uResolution.
+4. Use tags: [vertex] and [fragment].
+5. No explanations, no markdown.
       `,
 			messages: pruneMessages({
 				messages: await convertToModelMessages(this.messages),

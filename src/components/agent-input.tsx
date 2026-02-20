@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from "@hugeicons/core-free-icons";
+import { ArrowRightIcon, CleanIcon } from "@hugeicons/core-free-icons";
 import { Button } from "@/components/ui/button";
 import {
   InputGroup,
@@ -14,9 +14,13 @@ import { HugeiconsIcon } from "@hugeicons/react";
 
 type AgentInputProps = {
   onSubmit?: (input: string) => void;
+  onClearHistory?: () => void;
 };
 
-export default function AgentInput({ onSubmit }: AgentInputProps) {
+export default function AgentInput({
+  onSubmit,
+  onClearHistory,
+}: AgentInputProps) {
   function onFormSubmit(e: React.SubmitEvent) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget as HTMLFormElement);
@@ -49,10 +53,25 @@ export default function AgentInput({ onSubmit }: AgentInputProps) {
       <InputGroup>
         <InputGroupTextarea
           name="agent-input"
-          placeholder="Ask, Search or Chat…"
+          placeholder="Ask shader buddy for a shader..."
           onKeyDown={onKeyDown}
         />
         <InputGroupAddon align="block-end">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="submit"
+                aria-label="Send"
+                className="rounded-full"
+                size="icon-sm"
+                variant="outline"
+                onClick={onClearHistory}
+              >
+                <HugeiconsIcon icon={CleanIcon} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>clear history</TooltipContent>
+          </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
