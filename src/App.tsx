@@ -5,13 +5,10 @@ import { useShaderBuddy } from "@/hooks/use-shader-buddy";
 import { ThirdBracketSquareIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Chat from "./components/chat";
-import { INITIAL_FRAGMENT_SHADER, INITIAL_VERTEX_SHADER } from "./lib/consts";
 
 export function App() {
-  const { sendMessage, messages, clearHistory } = useShaderBuddy();
-
-  const vertexShader = INITIAL_VERTEX_SHADER;
-  const fragmentShader = INITIAL_FRAGMENT_SHADER;
+  const { sendMessage, messages, clearHistory, vertexShader, fragmentShader } =
+    useShaderBuddy();
 
   return (
     <main className="flex gap-4 p-4 h-svh">
@@ -51,11 +48,7 @@ export function App() {
       </div>
       <Chat
         messages={messages}
-        onSubmit={(input) =>
-          sendMessage({
-            text: input,
-          })
-        }
+        onSubmit={sendMessage}
         onClearHistory={clearHistory}
       />
     </main>

@@ -1,28 +1,12 @@
-import { useAgentChat } from "@cloudflare/ai-chat/react";
-import { useAgent } from "agents/react";
+import { ShaderBuddyContext } from "@/contexts/shader-buddy-context";
+import { useContext } from "react";
 
 export const useShaderBuddy = () => {
-  const agent = useAgent({
-    agent: "shader-buddy-agent",
-    host: import.meta.env.VITE_AGENT_HOST,
-  });
+  const context = useContext(ShaderBuddyContext);
 
-  const {
-    messages,
-    sendMessage,
-    clearHistory,
-    addToolApprovalResponse,
-    status,
-  } = useAgentChat({
-    agent,
-  });
+  if (!context) {
+    throw new Error("useShaderBuddy must be used within a ShaderBuddyProvider");
+  }
 
-  return {
-    agent,
-    messages,
-    sendMessage,
-    clearHistory,
-    addToolApprovalResponse,
-    status,
-  };
+  return context;
 };
