@@ -13,6 +13,7 @@ export default function ShaderTool({
   return (
     <Canvas orthographic camera={{ zoom: 1, position: [0, 0, 1] }}>
       <ShaderPlane
+        key={vertexShader + fragmentShader}
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
       />

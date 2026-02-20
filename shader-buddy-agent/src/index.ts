@@ -16,33 +16,32 @@ You are a GLSL expert. Output ONLY code for WebGL2.
 Use exactly this structure with tags:
 
 <vertex>
-#version 300 es
-in vec3 position;
+varying vec2 vUv;
+
 void main() {
-    gl_Position = vec4(position, 1.0);
+  vUv = uv;
+  gl_Position = vec4(position, 1.0);
 }
 </vertex>
 
 <fragment>
-#version 300 es
 precision highp float;
+
 uniform float uTime;
 uniform vec2 uResolution;
-out vec4 fragColor;
+varying vec2 vUv;
 
 void main() {
-    vec2 uv = gl_FragCoord.xy / uResolution;
-    // Your logic here
-    fragColor = vec4(uv.x, uv.y, 0.5, 1.0);
+  vec2 uv = vUv;
+  float wave = sin(uTime + uv.x * 10.0);
+  gl_FragColor = vec4(vec3(0.5 + 0.5 * wave), 1.0);
 }
 </fragment>
 
 Strict rules:
-1. Use #version 300 es.
-2. For fragment shaders, NEVER use gl_FragColor. Use: out vec4 fragColor;
-3. Use exactly these uniform names: uTime, uResolution.
-4. Use tags: [vertex] and [fragment].
-5. No explanations, no markdown.
+1. Use exactly these uniform names: uTime, uResolution.
+2. Use tags: <vertex> and <fragment>.
+3. No explanations, no markdown.
       `,
 			messages: pruneMessages({
 				messages: await convertToModelMessages(this.messages),

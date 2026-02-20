@@ -4,21 +4,10 @@ import { useAgentChat } from "@cloudflare/ai-chat/react";
 import { ShaderBuddyContext } from "@/contexts/shader-buddy-context";
 import { useState } from "react";
 import { INITIAL_FRAGMENT_SHADER, INITIAL_VERTEX_SHADER } from "@/lib/consts";
+import { parseShaders } from "@/lib/utils";
 
 type ShaderBuddyProviderProps = {
   children: React.ReactNode;
-};
-
-const parseShaders = (rawText: string) => {
-  // Regex para capturar o conteúdo entre [vertex] e [/vertex] ou <vertex> e </vertex>
-  // O sinalizador 'i' torna a busca case-insensitive
-  const vertexMatch = rawText.match(/<vertex>([\s\S]*?)<\/vertex>/i);
-  const fragmentMatch = rawText.match(/<fragment>([\s\S]*?)<\/fragment>/i);
-
-  return {
-    vertex: vertexMatch ? vertexMatch[1].trim() : null,
-    fragment: fragmentMatch ? fragmentMatch[1].trim() : null,
-  };
 };
 
 export function ShaderBuddyProvider({ children }: ShaderBuddyProviderProps) {
@@ -72,11 +61,17 @@ export function ShaderBuddyProvider({ children }: ShaderBuddyProviderProps) {
     if (vertex) setVertex(vertex);
   };
 
+  const clearShaderHistoryAndReset = () => {
+    setFragment(INITIAL_FRAGMENT_SHADER);
+    setVertex(INITIAL_VERTEX_SHADER);
+    clearHistory();
+  };
+
   return (
     <ShaderBuddyContext.Provider
       value={{
         messages,
-        clearHistory,
+        clearHistory: clearShaderHistoryAndReset,
         sendMessage,
         status,
         fragmentShader: fragment,

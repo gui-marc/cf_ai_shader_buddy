@@ -1,6 +1,6 @@
 import { useShaderBuddy } from "@/hooks/use-shader-buddy";
 import { cn, parseShaders } from "@/lib/utils";
-import { AlertIcon, Loading03Icon, Spinner } from "@hugeicons/core-free-icons";
+import { AlertIcon, Loading03Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { UIMessage } from "ai";
 import { cva } from "class-variance-authority";

@@ -11,26 +11,26 @@ export default function ShaderCodeVisualizer({
   fragment: string;
 }) {
   return (
-    <Tabs defaultValue="vertex-code">
+    <Tabs defaultValue="fragment-code">
       <div className="p-2 border-b">
         <TabsList>
-          <TabsTrigger value="vertex-code">
-            <HugeiconsIcon icon={ThirdBracketSquareIcon} />
-            Vertex Shader
-          </TabsTrigger>
           <TabsTrigger value="fragment-code">
             <HugeiconsIcon icon={ThirdBracketSquareIcon} />
             Fragment Shader
+          </TabsTrigger>
+          <TabsTrigger value="vertex-code">
+            <HugeiconsIcon icon={ThirdBracketSquareIcon} />
+            Vertex Shader
           </TabsTrigger>
         </TabsList>
       </div>
 
       <div className="flex-1 overflow-hidden flex">
-        <TabsContent value="vertex-code">
-          <ShaderCodeTab shaderCode={vertex} />
-        </TabsContent>
         <TabsContent value="fragment-code">
           <ShaderCodeTab shaderCode={fragment} />
+        </TabsContent>
+        <TabsContent value="vertex-code">
+          <ShaderCodeTab shaderCode={vertex} />
         </TabsContent>
       </div>
     </Tabs>
