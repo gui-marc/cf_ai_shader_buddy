@@ -2,7 +2,7 @@
 
 AI Shader Buddy is a tool that generates shader code based on user input. It uses natural language processing to understand the user's requirements and creates shader code accordingly. The tool is designed to help developers and artists quickly create shaders without needing to write code manually.
 
-![AI Shader Buddy Demo](./demonstration/video.mp4)
+[![Watch the video](https://img.youtube.com/vi/QlRf_7_ukDw/maxresdefault.jpg)](https://youtu.be/QlRf_7_ukDw)
 
 Access it here: [AI Shader Buddy](https://cf-ai-shader-buddy.guilherme-marcondes.workers.dev/)
 
