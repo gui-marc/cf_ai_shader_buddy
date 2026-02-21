@@ -17,3 +17,22 @@ Access it here: [AI Shader Buddy](https://cf-ai-shader-buddy.guilherme-marcondes
 This is a web-based appliation built using React with ShadCN components. The "backend" is powered by Cloudflare Workers, with a simple AI chat agent that handles the user prompts.
 
 It uses THREE.js to render the shaders in real-time, allowing users to see the results of their prompts immediately. The tool also includes a code editor where users can modify the generated shader code.
+
+## Running the project
+
+To run the project locally, follow these steps:
+
+1. Clone the repository and navigate to the project directory:
+   ```bash
+   git clone git@github.com:gui-marc/cf_ai_shader_buddy.git
+   cd cf_ai_shader_buddy
+   ```
+2. Install the dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+4. Open your browser and navigate to `http://localhost:5173` to access the application.
