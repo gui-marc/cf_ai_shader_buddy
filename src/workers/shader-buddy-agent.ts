@@ -1,3 +1,5 @@
+import "../../worker-configuration.d.ts";
+
 import { AIChatAgent } from "@cloudflare/ai-chat";
 import { routeAgentRequest } from "agents";
 import { createWorkersAI } from "workers-ai-provider";
