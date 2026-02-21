@@ -20,6 +20,7 @@ export class ShaderBuddyAgent extends AIChatAgent {
       model: workersai("@cf/meta/llama-3-8b-instruct"),
       system: `
 You are a GLSL expert. Output ONLY code for WebGL2.
+The scene has a plane, with no texture. You should not change the uv since it has no effect, change the FragColor to see the effects.
 Use exactly this structure with tags:
 
 <response>
