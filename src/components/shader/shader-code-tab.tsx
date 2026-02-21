@@ -6,7 +6,11 @@ interface ShaderCodeTabProps {
 
 export default function ShaderCodeTab({ shaderCode }: ShaderCodeTabProps) {
   return (
-    <ShikiHighlighter language="glsl" theme="github-light">
+    <ShikiHighlighter
+      className="overflow-auto max-w-[calc(50vw-5rem)]"
+      language="glsl"
+      theme="github-light"
+    >
       {shaderCode.trim()}
     </ShikiHighlighter>
   );

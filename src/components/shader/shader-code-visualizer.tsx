@@ -2,13 +2,20 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { ThirdBracketSquareIcon } from "@hugeicons/core-free-icons";
 import ShaderCodeTab from "./shader-code-tab";
+import ShaderCodeEditor from "./shader-code-editor";
 
 export default function ShaderCodeVisualizer({
   vertex,
   fragment,
+  editable = false,
+  onChangeVertex,
+  onChangeFragment,
 }: {
   vertex: string;
   fragment: string;
+  editable?: boolean;
+  onChangeVertex?: (value: string) => void;
+  onChangeFragment?: (value: string) => void;
 }) {
   return (
     <Tabs defaultValue="fragment-code">
@@ -25,12 +32,21 @@ export default function ShaderCodeVisualizer({
         </TabsList>
       </div>
 
-      <div className="flex-1 overflow-hidden flex">
+      <div className="flex-1 flex">
         <TabsContent value="fragment-code">
-          <ShaderCodeTab shaderCode={fragment} />
+          {editable && onChangeFragment && (
+            <ShaderCodeEditor
+              onChange={onChangeFragment}
+              shaderCode={fragment}
+            />
+          )}
+          {!editable && <ShaderCodeTab shaderCode={fragment} />}
         </TabsContent>
         <TabsContent value="vertex-code">
-          <ShaderCodeTab shaderCode={vertex} />
+          {editable && onChangeVertex && (
+            <ShaderCodeEditor onChange={onChangeVertex} shaderCode={vertex} />
+          )}
+          {!editable && <ShaderCodeTab shaderCode={vertex} />}
         </TabsContent>
       </div>
     </Tabs>

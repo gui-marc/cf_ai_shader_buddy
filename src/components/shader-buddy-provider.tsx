@@ -4,7 +4,7 @@ import { useAgentChat } from "@cloudflare/ai-chat/react";
 import { ShaderBuddyContext } from "@/contexts/shader-buddy-context";
 import { useState } from "react";
 import { INITIAL_FRAGMENT_SHADER, INITIAL_VERTEX_SHADER } from "@/lib/consts";
-import { parseShaders } from "@/lib/utils";
+import { parseAssistantMessage } from "@/lib/utils";
 
 type ShaderBuddyProviderProps = {
   children: React.ReactNode;
@@ -32,7 +32,7 @@ export function ShaderBuddyProvider({ children }: ShaderBuddyProviderProps) {
         return acc;
       }, "");
 
-      const shader = parseShaders(text);
+      const shader = parseAssistantMessage(text);
 
       if (!shader.fragment || !shader.vertex) return;
 
@@ -42,7 +42,20 @@ export function ShaderBuddyProvider({ children }: ShaderBuddyProviderProps) {
   });
 
   const sendMessage = (message: string) => {
-    _sendMessage({ text: message });
+    const messageWithCurrentCode = `
+      <user-input>
+      ${message}
+      </user-input>
+
+      <current-vertex-shader>
+      ${vertex}
+      </current-vertex-shader>
+
+      <current-fragment-shader>
+      ${fragment}
+      </current-fragment-shader>
+      `;
+    _sendMessage({ text: messageWithCurrentCode });
   };
 
   const setShaderToMessage = (messageId: string) => {
@@ -55,7 +68,7 @@ export function ShaderBuddyProvider({ children }: ShaderBuddyProviderProps) {
       return acc;
     }, "");
 
-    const { fragment, vertex } = parseShaders(text);
+    const { fragment, vertex } = parseAssistantMessage(text);
 
     if (fragment) setFragment(fragment);
     if (vertex) setVertex(vertex);

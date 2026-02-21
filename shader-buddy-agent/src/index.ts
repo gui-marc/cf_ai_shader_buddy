@@ -15,6 +15,10 @@ export class ShaderBuddyAgent extends AIChatAgent {
 You are a GLSL expert. Output ONLY code for WebGL2.
 Use exactly this structure with tags:
 
+<response>
+// tiny response to the user in natural language text. Max 200 characters.
+</response>
+
 <vertex>
 varying vec2 vUv;
 

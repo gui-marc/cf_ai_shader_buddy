@@ -1,5 +1,5 @@
 import { useShaderBuddy } from "@/hooks/use-shader-buddy";
-import { cn, parseShaders } from "@/lib/utils";
+import { cn, parseAssistantMessage, parseUserMessage } from "@/lib/utils";
 import { AlertIcon, Loading03Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { UIMessage } from "ai";
@@ -18,13 +18,18 @@ const messageClasses = cva("rounded-md py-1.5 px-3 relative w-fit", {
 });
 
 function UserMessage({ message }: { message: UIMessage }) {
+  const text = message.parts.reduce((acc, part) => {
+    if (part.type === "text") {
+      return acc + part.text;
+    }
+    return acc;
+  }, "");
+
+  const parsedMessage = parseUserMessage(text);
+
   return (
     <div className={cn(messageClasses({ role: "user" }))}>
-      {message.parts.map((part, i) => {
-        if (part.type === "text") {
-          return <span key={i}>{part.text}</span>;
-        }
-      })}
+      {parsedMessage.user}
     </div>
   );
 }
@@ -59,9 +64,9 @@ function AssistantMessage({
     return acc;
   }, "");
 
-  const shaders = parseShaders(text);
+  const response = parseAssistantMessage(text);
 
-  if (!shaders.vertex || !shaders.fragment) {
+  if (!response.vertex || !response.fragment) {
     return (
       <div className={cn(messageClasses({ role: "assistant" }))}>
         <div className="flex items-center gap-2">
@@ -75,21 +80,26 @@ function AssistantMessage({
   }
 
   return (
-    <div className={cn(messageClasses({ role: "assistant" }), "w-auto")}>
-      <ShaderCodeVisualizer
-        fragment={shaders.fragment}
-        vertex={shaders.vertex}
-      />
-      <div className="w-full pt-3 pb-1.5">
-        <Button
-          variant="outline"
-          className="ml-auto block"
-          onClick={() => setShaderToMessage(message.id)}
-        >
-          Use this shader
-        </Button>
+    <>
+      <div className={cn(messageClasses({ role: "assistant" }))}>
+        <p>{response.assistant}</p>
       </div>
-    </div>
+      <div className={cn(messageClasses({ role: "assistant" }), "w-auto")}>
+        <ShaderCodeVisualizer
+          fragment={response.fragment}
+          vertex={response.vertex}
+        />
+        <div className="w-full pt-3 pb-1.5">
+          <Button
+            variant="outline"
+            className="ml-auto block"
+            onClick={() => setShaderToMessage(message.id)}
+          >
+            Use this shader
+          </Button>
+        </div>
+      </div>
+    </>
   );
 }
 
