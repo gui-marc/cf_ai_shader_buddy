@@ -16,7 +16,6 @@ export function ShaderBuddyProvider({ children }: ShaderBuddyProviderProps) {
 
   const agent = useAgent({
     agent: "shader-buddy-agent",
-    host: import.meta.env.VITE_AGENT_HOST,
   });
 
   const {
